@@ -53,8 +53,8 @@ func UpdateProduct(product *Product) error {
 	return nil
 }
 
-// AddProduct creates a new product
-func AddProduct(product *Product) {
+// NewPlayer creates a new product
+func NewPlayer(product *Product) {
 	product.ID = getNextID()
 	productList = append(productList, product)
 }

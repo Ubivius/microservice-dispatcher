@@ -16,7 +16,7 @@ func NewTestLogger() *log.Logger {
 	return log.New(os.Stdout, "Tests", log.LstdFlags)
 }
 
-func TestAddProduct(t *testing.T) {
+func TestNewPlayer(t *testing.T) {
 	// Creating request body
 	body := &data.Product{
 		Name:        "addName",
@@ -33,7 +33,7 @@ func TestAddProduct(t *testing.T) {
 	request = request.WithContext(ctx)
 
 	productHandler := NewProductsHandler(NewTestLogger())
-	productHandler.AddProduct(response, request)
+	productHandler.NewPlayer(response, request)
 
 	if response.Code != http.StatusNoContent {
 		t.Errorf("Expected status code %d, but got %d", http.StatusNoContent, response.Code)
