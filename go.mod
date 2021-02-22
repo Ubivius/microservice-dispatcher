@@ -8,4 +8,5 @@ require (
 	github.com/gorilla/mux v1.8.0
 	github.com/leodido/go-urn v1.2.1 // indirect
 	gopkg.in/go-playground/assert.v1 v1.2.1 // indirect
+	k8s.io/client-go v0.0.0-20210219052155-12449b5492ee // indirect
 )

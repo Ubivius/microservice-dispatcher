@@ -1,5 +1,0 @@
-package operator
-
-func StartServerWithPlayer() {
-
-}
