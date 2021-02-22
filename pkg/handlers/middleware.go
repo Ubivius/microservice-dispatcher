@@ -13,7 +13,7 @@ import (
 // We want our validation errors to have a standard format
 
 // MiddlewareProductValidation is used to validate incoming product JSONS
-func (productHandler *ProductsHandler) MiddlewareProductValidation(next http.Handler) http.Handler {
+func (productHandler *GameHandler) MiddlewareProductValidation(next http.Handler) http.Handler {
 	return http.HandlerFunc(func(responseWriter http.ResponseWriter, request *http.Request) {
 		product := &data.Product{}
 

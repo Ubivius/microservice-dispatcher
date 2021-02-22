@@ -32,7 +32,7 @@ func TestNewPlayer(t *testing.T) {
 	ctx := context.WithValue(request.Context(), KeyProduct{}, body)
 	request = request.WithContext(ctx)
 
-	productHandler := NewProductsHandler(NewTestLogger())
+	productHandler := NewGameHandler(NewTestLogger())
 	productHandler.NewPlayer(response, request)
 
 	if response.Code != http.StatusNoContent {
