@@ -1,1 +1,5 @@
 package operator
+
+func StartServerWithPlayer() {
+
+}
