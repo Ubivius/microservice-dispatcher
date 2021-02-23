@@ -4,7 +4,7 @@ package data
 // Formatting done with json tags to the right. "-" : don't include when encoding to json
 type Player struct {
 	ID int    `json:"id" validate:"required"`
-	IP string `json:"ip" validate:"required,customip"`
+	IP string `json:"ip" validate:"required,customip,ipv4"`
 }
 
 // Products is a collection of Product
