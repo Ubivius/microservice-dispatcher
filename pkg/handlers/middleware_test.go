@@ -37,11 +37,11 @@ func TestValidationMiddlewareWithValidBody(t *testing.T) {
 	}
 }
 
-func TestValidationMiddlewareWithNoName(t *testing.T) {
+func TestValidationMiddlewareWithInvalidIP(t *testing.T) {
 	// Creating request body
 	body := &data.Player{
 		ID: 1,
-		IP: "0.0.0.0",
+		IP: "0.0.0.a",
 	}
 	bodyBytes, err := json.Marshal(body)
 	if err != nil {
@@ -64,7 +64,7 @@ func TestValidationMiddlewareWithNoName(t *testing.T) {
 	if response.Code != http.StatusBadRequest {
 		t.Errorf("Expected status code %d, but got %d", http.StatusBadRequest, response.Code)
 	}
-	if !strings.Contains(response.Body.String(), "Field validation for 'Name' failed on the 'required' tag") {
-		t.Error("Expected error on field validation for Name but got : ", response.Body.String())
+	if !strings.Contains(response.Body.String(), "Field validation for 'IP' failed on the 'customip' tag") {
+		t.Error("Expected error on field validation for IP but got : ", response.Body.String())
 	}
 }
