@@ -13,7 +13,7 @@ import (
 
 func TestValidationMiddlewareWithValidBody(t *testing.T) {
 	// Creating request body
-	body := &data.Product{
+	body := &data.Player{
 		Name:        "addName",
 		Description: "addDescription",
 		Price:       1,
@@ -41,7 +41,7 @@ func TestValidationMiddlewareWithValidBody(t *testing.T) {
 
 func TestValidationMiddlewareWithNoName(t *testing.T) {
 	// Creating request body
-	body := &data.Product{
+	body := &data.Player{
 		Description: "addDescription",
 		Price:       1,
 		SKU:         "abc-abc-abcd",

@@ -18,7 +18,7 @@ func NewTestLogger() *log.Logger {
 
 func TestNewPlayer(t *testing.T) {
 	// Creating request body
-	body := &data.Product{
+	body := &data.Player{
 		Name:        "addName",
 		Description: "addDescription",
 		Price:       1,

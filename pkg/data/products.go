@@ -2,16 +2,15 @@ package data
 
 import (
 	"fmt"
-	"time"
 )
 
 // ErrorProductNotFound : Product specific errors
 var ErrorProductNotFound = fmt.Errorf("Product not found")
 
-// Product defines the structure for an API product.
+// Player defines the structure for an API product.
 // Formatting done with json tags to the right. "-" : don't include when encoding to json
-type Product struct {
-	ID          int     `json:"id"`
+type Player struct {
+	ID          int     `json:"id" validate:"required"`
 	Name        string  `json:"name" validate:"required"`
 	Description string  `json:"description"`
 	Price       float32 `json:"price" validate:"gt=0"`
@@ -22,41 +21,41 @@ type Product struct {
 }
 
 // Products is a collection of Product
-type Products []*Product
+type Products []*Player
 
 // All of these functions will become database calls in the future
 // GETTING PRODUCTS
 
 // GetProducts returns the list of products
 func GetProducts() Products {
-	return productList
+	return playerList
 }
 
 // GetProductByID returns a single product with the given id
-func GetProductByID(id int) (*Product, error) {
+func GetProductByID(id int) (*Player, error) {
 	index := findIndexByProductID(id)
 	if index == -1 {
 		return nil, ErrorProductNotFound
 	}
-	return productList[index], nil
+	return playerList[index], nil
 }
 
 // UPDATING PRODUCTS
 
 // UpdateProduct updates the product specified in received JSON
-func UpdateProduct(product *Product) error {
+func UpdateProduct(product *Player) error {
 	index := findIndexByProductID(product.ID)
 	if index == -1 {
 		return ErrorProductNotFound
 	}
-	productList[index] = product
+	playerList[index] = product
 	return nil
 }
 
 // NewPlayer creates a new product
-func NewPlayer(product *Product) {
+func NewPlayer(product *Player) {
 	product.ID = getNextID()
-	productList = append(productList, product)
+	playerList = append(playerList, product)
 }
 
 // DeleteProduct deletes the product with the given id
@@ -67,7 +66,7 @@ func DeleteProduct(id int) error {
 	}
 
 	// This should not work, probably needs ':' after index+1. To test
-	productList = append(productList[:index], productList[index+1])
+	playerList = append(playerList[:index], playerList[index+1])
 
 	return nil
 }
@@ -75,7 +74,7 @@ func DeleteProduct(id int) error {
 // Returns the index of a product in the database
 // Returns -1 when no product is found
 func findIndexByProductID(id int) int {
-	for index, product := range productList {
+	for index, product := range playerList {
 		if product.ID == id {
 			return index
 		}
@@ -90,29 +89,10 @@ func findIndexByProductID(id int) int {
 
 // Finds the maximum index of our fake database and adds 1
 func getNextID() int {
-	lastProduct := productList[len(productList)-1]
+	lastProduct := playerList[len(playerList)-1]
 	return lastProduct.ID + 1
 }
 
-// productList is a hard coded list of products for this
+// playerList is a hard coded list of products for this
 // example data source. Should be replaced by database connection
-var productList = []*Product{
-	{
-		ID:          1,
-		Name:        "Sword",
-		Description: "A basic steel sword",
-		Price:       250,
-		SKU:         "abc323",
-		CreatedOn:   time.Now().UTC().String(),
-		UpdatedOn:   time.Now().UTC().String(),
-	},
-	{
-		ID:          2,
-		Name:        "Boots",
-		Description: "Simple leather boots",
-		Price:       100,
-		SKU:         "fjd34",
-		CreatedOn:   time.Now().UTC().String(),
-		UpdatedOn:   time.Now().UTC().String(),
-	},
-}
+var playerList = []*Player{}

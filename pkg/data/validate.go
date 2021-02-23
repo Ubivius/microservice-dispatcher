@@ -7,7 +7,7 @@ import (
 )
 
 // ValidateProduct a product with json validation and IP validator
-func (product *Product) ValidateProduct() error {
+func (product *Player) ValidateProduct() error {
 	validate := validator.New()
 	err := validate.RegisterValidation("sku", validateIP)
 	if err != nil {

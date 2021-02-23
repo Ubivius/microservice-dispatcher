@@ -3,7 +3,7 @@ package data
 import "testing"
 
 func TestChecksValidation(t *testing.T) {
-	product := &Product{
+	product := &Player{
 		Name:  "Malcolm",
 		Price: 2.00,
 		SKU:   "abs-abs-abscd",
