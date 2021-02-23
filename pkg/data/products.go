@@ -3,12 +3,9 @@ package data
 // Player defines the structure for an API product.
 // Formatting done with json tags to the right. "-" : don't include when encoding to json
 type Player struct {
-	ID          int     `json:"id" validate:"required"`
-	Name        string  `json:"name" validate:"required"`
-	Description string  `json:"description"`
-	Price       float32 `json:"price" validate:"gt=0"`
-	SKU         string  `json:"sku" validate:"required,sku"`
-	IP          string  `json:"ip" validate:"required,ip"`
+	ID  int    `json:"id" validate:"required"`
+	SKU string `json:"sku" validate:"required,sku"`
+	IP  string `json:"ip" validate:"required,customip"`
 }
 
 // Products is a collection of Product

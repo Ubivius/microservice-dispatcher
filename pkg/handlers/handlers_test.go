@@ -19,10 +19,9 @@ func NewTestLogger() *log.Logger {
 func TestNewPlayer(t *testing.T) {
 	// Creating request body
 	body := &data.Player{
-		Name:        "addName",
-		Description: "addDescription",
-		Price:       1,
-		SKU:         "abc-abc-abcd",
+		ID:  1,
+		SKU: "abc-abc-abcd",
+		IP:  "0.0.0.0",
 	}
 
 	request := httptest.NewRequest(http.MethodPost, "/products", nil)

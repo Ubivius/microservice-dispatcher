@@ -14,10 +14,9 @@ import (
 func TestValidationMiddlewareWithValidBody(t *testing.T) {
 	// Creating request body
 	body := &data.Player{
-		Name:        "addName",
-		Description: "addDescription",
-		Price:       1,
-		SKU:         "abc-abc-abcd",
+		ID:  1,
+		SKU: "abc-abc-abcd",
+		IP:  "0.0.0.0",
 	}
 	bodyBytes, _ := json.Marshal(body)
 
@@ -42,9 +41,9 @@ func TestValidationMiddlewareWithValidBody(t *testing.T) {
 func TestValidationMiddlewareWithNoName(t *testing.T) {
 	// Creating request body
 	body := &data.Player{
-		Description: "addDescription",
-		Price:       1,
-		SKU:         "abc-abc-abcd",
+		ID:  1,
+		SKU: "abc-abc-abcd",
+		IP:  "0.0.0.0",
 	}
 	bodyBytes, err := json.Marshal(body)
 	if err != nil {
