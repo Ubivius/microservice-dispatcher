@@ -15,7 +15,7 @@ import (
 // MiddlewareProductValidation is used to validate incoming product JSONS
 func (productHandler *GameHandler) MiddlewareProductValidation(next http.Handler) http.Handler {
 	return http.HandlerFunc(func(responseWriter http.ResponseWriter, request *http.Request) {
-		product := &data.Product{}
+		product := &data.Player{}
 
 		err := data.FromJSON(product, request.Body)
 		if err != nil {
