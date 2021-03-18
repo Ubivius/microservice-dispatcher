@@ -64,7 +64,7 @@ func TestValidationMiddlewareWithInvalidIP(t *testing.T) {
 	if response.Code != http.StatusBadRequest {
 		t.Errorf("Expected status code %d, but got %d", http.StatusBadRequest, response.Code)
 	}
-	if !strings.Contains(response.Body.String(), "Field validation for 'IP' failed on the 'customip' tag") {
+	if !strings.Contains(response.Body.String(), "Field validation for 'IP' failed on the 'ipv4' tag") {
 		t.Error("Expected error on field validation for IP but got : ", response.Body.String())
 	}
 }
