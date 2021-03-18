@@ -48,15 +48,15 @@ func TestValidationMiddlewareWithInvalidIP(t *testing.T) {
 		t.Error("Body passing to test is not a valid json struct : ", err)
 	}
 
-	request := httptest.NewRequest(http.MethodPost, "/products", strings.NewReader(string(bodyBytes)))
+	request := httptest.NewRequest(http.MethodPost, "/player", strings.NewReader(string(bodyBytes)))
 	response := httptest.NewRecorder()
 
-	productHandler := NewGameHandler(NewTestLogger())
+	gameHandler := NewGameHandler(NewTestLogger())
 
 	// Create a router for middleware because linking is handled by gorilla/mux
 	router := mux.NewRouter()
-	router.HandleFunc("/products", productHandler.NewPlayer)
-	router.Use(productHandler.MiddlewarePlayerValidation)
+	router.HandleFunc("/player", gameHandler.NewPlayer)
+	router.Use(gameHandler.MiddlewarePlayerValidation)
 
 	// Server http on our router
 	router.ServeHTTP(response, request)

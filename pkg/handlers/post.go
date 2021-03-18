@@ -6,11 +6,11 @@ import (
 	"github.com/Ubivius/microservice-dispatcher/pkg/data"
 )
 
-// NewPlayer creates a new product from the received JSON
-func (productHandler *GameHandler) NewPlayer(responseWriter http.ResponseWriter, request *http.Request) {
-	productHandler.logger.Println("Handle POST for new game request")
-	product := request.Context().Value(KeyPlayer{}).(*data.Player)
+// NewPlayer creates a new player from the received JSON
+func (gameHandler *GameHandler) NewPlayer(responseWriter http.ResponseWriter, request *http.Request) {
+	gameHandler.logger.Println("Handle POST for new game request")
+	player := request.Context().Value(KeyPlayer{}).(*data.Player)
 
-	data.NewPlayer(product)
+	data.NewPlayer(player)
 	responseWriter.WriteHeader(http.StatusNoContent)
 }

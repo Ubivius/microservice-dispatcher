@@ -16,20 +16,20 @@ func (gameHandler *GameHandler) MiddlewarePlayerValidation(next http.Handler) ht
 
 		err := json.NewDecoder(request.Body).Decode(player)
 		if err != nil {
-			gameHandler.logger.Println("[ERROR] deserializing product", err)
-			http.Error(responseWriter, "Error reading product", http.StatusBadRequest)
+			gameHandler.logger.Println("[ERROR] deserializing player", err)
+			http.Error(responseWriter, "Error reading player", http.StatusBadRequest)
 			return
 		}
 
-		// validate the product
+		// validate the player
 		err = player.ValidatePlayer()
 		if err != nil {
-			gameHandler.logger.Println("[ERROR] validating product", err)
-			http.Error(responseWriter, fmt.Sprintf("Error validating product: %s", err), http.StatusBadRequest)
+			gameHandler.logger.Println("[ERROR] validating player", err)
+			http.Error(responseWriter, fmt.Sprintf("Error validating player: %s", err), http.StatusBadRequest)
 			return
 		}
 
-		// Add the product to the context
+		// Add the player to the context
 		ctx := context.WithValue(request.Context(), KeyPlayer{}, player)
 		request = request.WithContext(ctx)
 
