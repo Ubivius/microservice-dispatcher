@@ -4,8 +4,8 @@ import (
 	"log"
 )
 
-// KeyProduct is a key used for the Product object inside context
-type KeyProduct struct{}
+// KeyPlayer is a key used for the Product object inside context
+type KeyPlayer struct{}
 
 // GameHandler contains the items common to all product handler functions
 type GameHandler struct {
