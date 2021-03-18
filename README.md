@@ -1,9 +1,10 @@
-# microservice-template
-Template for microservices.
+# microservice-dispatcher
+The dispatcher is used for starting game servers in the kubernetes cluster.
 
-This template can be used to create another microservice without having to write any of the boilerplate code.
+When players are logged into their account in the game client they send a request to the disatcher.
 
-**Launch local ElasticSearch**
-----
-  Run the elasticsearch.sh script to start a local ElasticSearch DB in a docker container.
-  You can validate if it is running at localhost:9200 in your browser.
+Dispatcher calls matchmaking. Once matchmaking returns a slice of players the dispatcher starts the game server.
+
+This is where the kubernetes controller part of this service comes into play.
+
+Once the game server is up and running the dispatcher returns the information for connecting to the new game server to the players.

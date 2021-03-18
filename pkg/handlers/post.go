@@ -3,14 +3,14 @@ package handlers
 import (
 	"net/http"
 
-	"github.com/Ubivius/microservice-template/pkg/data"
+	"github.com/Ubivius/microservice-dispatcher/pkg/data"
 )
 
-// AddProduct creates a new product from the received JSON
-func (productHandler *ProductsHandler) AddProduct(responseWriter http.ResponseWriter, request *http.Request) {
-	productHandler.logger.Println("Handle POST Product")
-	product := request.Context().Value(KeyProduct{}).(*data.Product)
+// NewPlayer creates a new player from the received JSON
+func (gameHandler *GameHandler) NewPlayer(responseWriter http.ResponseWriter, request *http.Request) {
+	gameHandler.logger.Println("Handle POST for new game request")
+	player := request.Context().Value(KeyPlayer{}).(*data.Player)
 
-	data.AddProduct(product)
+	data.NewPlayer(player)
 	responseWriter.WriteHeader(http.StatusNoContent)
 }
