@@ -8,7 +8,7 @@ func TestChecksValidation(t *testing.T) {
 		IP: "0.0.0.0",
 	}
 
-	err := player.ValidateProduct()
+	err := player.ValidatePlayer()
 
 	if err != nil {
 		t.Fatal(err)

@@ -23,15 +23,15 @@ func TestNewPlayer(t *testing.T) {
 		IP: "0.0.0.0",
 	}
 
-	request := httptest.NewRequest(http.MethodPost, "/products", nil)
+	request := httptest.NewRequest(http.MethodPost, "/player", nil)
 	response := httptest.NewRecorder()
 
 	// Add the body to the context since we arent passing through middleware
 	ctx := context.WithValue(request.Context(), KeyPlayer{}, body)
 	request = request.WithContext(ctx)
 
-	productHandler := NewGameHandler(NewTestLogger())
-	productHandler.NewPlayer(response, request)
+	gameHandler := NewGameHandler(NewTestLogger())
+	gameHandler.NewPlayer(response, request)
 
 	if response.Code != http.StatusNoContent {
 		t.Errorf("Expected status code %d, but got %d", http.StatusNoContent, response.Code)

@@ -1,12 +1,11 @@
 package data
 
-// Player defines the structure for an API product.
 type Player struct {
 	ID int    `json:"id" validate:"required"`
 	IP string `json:"ip" validate:"required,ipv4"`
 }
 
-// Players is a collection of Product
+// Players is a collection of Player
 type Players []*Player
 
 // NewPlayer add the player to the game server queue

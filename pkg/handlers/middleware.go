@@ -22,7 +22,7 @@ func (gameHandler *GameHandler) MiddlewarePlayerValidation(next http.Handler) ht
 		}
 
 		// validate the product
-		err = player.ValidateProduct()
+		err = player.ValidatePlayer()
 		if err != nil {
 			gameHandler.logger.Println("[ERROR] validating product", err)
 			http.Error(responseWriter, fmt.Sprintf("Error validating product: %s", err), http.StatusBadRequest)

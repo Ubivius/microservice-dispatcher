@@ -17,15 +17,15 @@ func main() {
 	logger := log.New(os.Stdout, "Dispatcher", log.LstdFlags)
 
 	// Creating handlers
-	productHandler := handlers.NewGameHandler(logger)
+	gameHandler := handlers.NewGameHandler(logger)
 
 	// Mux route handling with gorilla/mux
 	router := mux.NewRouter()
 
 	// Post router
 	postRouter := router.Methods(http.MethodPost).Subrouter()
-	postRouter.HandleFunc("/products", productHandler.NewPlayer)
-	postRouter.Use(productHandler.MiddlewarePlayerValidation)
+	postRouter.HandleFunc("/player", gameHandler.NewPlayer)
+	postRouter.Use(gameHandler.MiddlewarePlayerValidation)
 
 	// Server setup
 	server := &http.Server{
