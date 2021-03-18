@@ -27,7 +27,7 @@ func TestValidationMiddlewareWithValidBody(t *testing.T) {
 	// Create a router for middleware because function attachment is handled by gorilla/mux
 	router := mux.NewRouter()
 	router.HandleFunc("/products", productHandler.NewPlayer)
-	router.Use(productHandler.MiddlewareProductValidation)
+	router.Use(productHandler.MiddlewarePlayerValidation)
 
 	// Server http on our router
 	router.ServeHTTP(response, request)
@@ -56,7 +56,7 @@ func TestValidationMiddlewareWithInvalidIP(t *testing.T) {
 	// Create a router for middleware because linking is handled by gorilla/mux
 	router := mux.NewRouter()
 	router.HandleFunc("/products", productHandler.NewPlayer)
-	router.Use(productHandler.MiddlewareProductValidation)
+	router.Use(productHandler.MiddlewarePlayerValidation)
 
 	// Server http on our router
 	router.ServeHTTP(response, request)

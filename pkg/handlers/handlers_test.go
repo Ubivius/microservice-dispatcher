@@ -27,7 +27,7 @@ func TestNewPlayer(t *testing.T) {
 	response := httptest.NewRecorder()
 
 	// Add the body to the context since we arent passing through middleware
-	ctx := context.WithValue(request.Context(), KeyProduct{}, body)
+	ctx := context.WithValue(request.Context(), KeyPlayer{}, body)
 	request = request.WithContext(ctx)
 
 	productHandler := NewGameHandler(NewTestLogger())

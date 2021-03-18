@@ -30,7 +30,7 @@ func (gameHandler *GameHandler) MiddlewarePlayerValidation(next http.Handler) ht
 		}
 
 		// Add the product to the context
-		ctx := context.WithValue(request.Context(), KeyProduct{}, player)
+		ctx := context.WithValue(request.Context(), KeyPlayer{}, player)
 		request = request.WithContext(ctx)
 
 		// Call the next handler, which can be another middleware or the final handler

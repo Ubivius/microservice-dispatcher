@@ -25,7 +25,7 @@ func main() {
 	// Post router
 	postRouter := router.Methods(http.MethodPost).Subrouter()
 	postRouter.HandleFunc("/products", productHandler.NewPlayer)
-	postRouter.Use(productHandler.MiddlewareProductValidation)
+	postRouter.Use(productHandler.MiddlewarePlayerValidation)
 
 	// Server setup
 	server := &http.Server{
