@@ -6,7 +6,7 @@ import (
 	"fmt"
 	"net/http"
 
-	"github.com/Ubivius/microservice-template/pkg/data"
+	"github.com/Ubivius/microservice-dispatcher/pkg/data"
 )
 
 // MiddlewarePlayerValidation is used to validate incoming player JSONS

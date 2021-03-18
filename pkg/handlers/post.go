@@ -3,7 +3,7 @@ package handlers
 import (
 	"net/http"
 
-	"github.com/Ubivius/microservice-template/pkg/data"
+	"github.com/Ubivius/microservice-dispatcher/pkg/data"
 )
 
 // NewPlayer creates a new product from the received JSON

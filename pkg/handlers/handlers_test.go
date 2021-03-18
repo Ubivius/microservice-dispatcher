@@ -8,7 +8,7 @@ import (
 	"os"
 	"testing"
 
-	"github.com/Ubivius/microservice-template/pkg/data"
+	"github.com/Ubivius/microservice-dispatcher/pkg/data"
 )
 
 // Move to util package in Sprint 9, should be a testing specific logger

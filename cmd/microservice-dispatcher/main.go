@@ -8,13 +8,13 @@ import (
 	"os/signal"
 	"time"
 
-	"github.com/Ubivius/microservice-template/pkg/handlers"
+	"github.com/Ubivius/microservice-dispatcher/pkg/handlers"
 	"github.com/gorilla/mux"
 )
 
 func main() {
 	// Logger
-	logger := log.New(os.Stdout, "Template", log.LstdFlags)
+	logger := log.New(os.Stdout, "Dispatcher", log.LstdFlags)
 
 	// Creating handlers
 	productHandler := handlers.NewGameHandler(logger)
