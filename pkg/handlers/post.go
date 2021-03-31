@@ -8,7 +8,7 @@ import (
 
 // NewPlayer creates a new player from the received JSON
 func (gameHandler *GameHandler) NewPlayer(responseWriter http.ResponseWriter, request *http.Request) {
-	gameHandler.logger.Println("Handle POST for new game request")
+	log.Info("POST request for new game")
 	player := request.Context().Value(KeyPlayer{}).(*data.Player)
 
 	data.NewPlayer(player)

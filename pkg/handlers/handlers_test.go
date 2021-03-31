@@ -2,19 +2,12 @@ package handlers
 
 import (
 	"context"
-	"log"
 	"net/http"
 	"net/http/httptest"
-	"os"
 	"testing"
 
 	"github.com/Ubivius/microservice-dispatcher/pkg/data"
 )
-
-// Move to util package in Sprint 9, should be a testing specific logger
-func NewTestLogger() *log.Logger {
-	return log.New(os.Stdout, "Tests", log.LstdFlags)
-}
 
 func TestNewPlayer(t *testing.T) {
 	// Creating request body
@@ -30,7 +23,7 @@ func TestNewPlayer(t *testing.T) {
 	ctx := context.WithValue(request.Context(), KeyPlayer{}, body)
 	request = request.WithContext(ctx)
 
-	gameHandler := NewGameHandler(NewTestLogger())
+	gameHandler := NewGameHandler()
 	gameHandler.NewPlayer(response, request)
 
 	if response.Code != http.StatusNoContent {
