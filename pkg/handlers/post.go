@@ -1,6 +1,7 @@
 package handlers
 
 import (
+	"encoding/json"
 	"net/http"
 
 	"github.com/Ubivius/microservice-dispatcher/pkg/data"
@@ -12,5 +13,12 @@ func (gameHandler *GameHandler) NewPlayer(responseWriter http.ResponseWriter, re
 	player := request.Context().Value(KeyPlayer{}).(*data.Player)
 
 	data.NewPlayer(player)
-	responseWriter.WriteHeader(http.StatusNoContent)
+	server := data.NewGameServer()
+	err := json.NewEncoder(responseWriter).Encode(server)
+	if err != nil {
+		log.Error(err, "Error creating game server")
+		http.Error(responseWriter, "Error creating game server", http.StatusInternalServerError)
+	}
+
+	// responseWriter.WriteHeader(http.StatusNoContent)
 }
