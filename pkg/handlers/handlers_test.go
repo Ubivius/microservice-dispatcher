@@ -4,6 +4,7 @@ import (
 	"context"
 	"net/http"
 	"net/http/httptest"
+	"strings"
 	"testing"
 
 	"github.com/Ubivius/microservice-dispatcher/pkg/data"
@@ -26,7 +27,10 @@ func TestNewPlayer(t *testing.T) {
 	gameHandler := NewGameHandler()
 	gameHandler.NewPlayer(response, request)
 
-	if response.Code != http.StatusNoContent {
-		t.Errorf("Expected status code %d, but got %d", http.StatusNoContent, response.Code)
+	if response.Code != http.StatusOK {
+		t.Errorf("Expected status code %d, but got %d", http.StatusAccepted, response.Code)
+	}
+	if !strings.Contains(response.Body.String(), "\"server_ip\":\"192.168.0.141\",\"tcp_port\":9051,\"udp_port\":9050") {
+		t.Errorf("Expected correct response body but got %s", response.Body.String())
 	}
 }
