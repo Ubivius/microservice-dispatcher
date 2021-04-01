@@ -14,7 +14,7 @@ import (
 	"sigs.k8s.io/controller-runtime/pkg/log/zap"
 )
 
-var log = logf.Log.WithName("template-main")
+var log = logf.Log.WithName("dispatcher-main")
 
 func main() {
 	// Starting k8s logger
