@@ -22,7 +22,7 @@ func TestValidationMiddlewareWithValidBody(t *testing.T) {
 	request := httptest.NewRequest(http.MethodPost, "/player", strings.NewReader(string(bodyBytes)))
 	response := httptest.NewRecorder()
 
-	gameHandler := NewGameHandler(NewTestLogger())
+	gameHandler := NewGameHandler()
 
 	// Create a router for middleware because function attachment is handled by gorilla/mux
 	router := mux.NewRouter()
@@ -32,8 +32,8 @@ func TestValidationMiddlewareWithValidBody(t *testing.T) {
 	// Server http on our router
 	router.ServeHTTP(response, request)
 
-	if response.Code != http.StatusNoContent {
-		t.Errorf("Expected status code %d, but got %d", http.StatusNoContent, response.Code)
+	if response.Code != http.StatusOK {
+		t.Errorf("Expected status code %d, but got %d", http.StatusOK, response.Code)
 	}
 }
 
@@ -51,7 +51,7 @@ func TestValidationMiddlewareWithInvalidIP(t *testing.T) {
 	request := httptest.NewRequest(http.MethodPost, "/player", strings.NewReader(string(bodyBytes)))
 	response := httptest.NewRecorder()
 
-	gameHandler := NewGameHandler(NewTestLogger())
+	gameHandler := NewGameHandler()
 
 	// Create a router for middleware because linking is handled by gorilla/mux
 	router := mux.NewRouter()

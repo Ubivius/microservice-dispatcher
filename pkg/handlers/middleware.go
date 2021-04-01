@@ -16,7 +16,7 @@ func (gameHandler *GameHandler) MiddlewarePlayerValidation(next http.Handler) ht
 
 		err := json.NewDecoder(request.Body).Decode(player)
 		if err != nil {
-			gameHandler.logger.Println("[ERROR] deserializing player", err)
+			log.Error(err, "Error deserializing player")
 			http.Error(responseWriter, "Error reading player", http.StatusBadRequest)
 			return
 		}
@@ -24,7 +24,7 @@ func (gameHandler *GameHandler) MiddlewarePlayerValidation(next http.Handler) ht
 		// validate the player
 		err = player.ValidatePlayer()
 		if err != nil {
-			gameHandler.logger.Println("[ERROR] validating player", err)
+			log.Error(err, "Error validating player")
 			http.Error(responseWriter, fmt.Sprintf("Error validating player: %s", err), http.StatusBadRequest)
 			return
 		}

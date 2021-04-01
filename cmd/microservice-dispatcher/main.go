@@ -2,7 +2,7 @@ package main
 
 import (
 	"context"
-	"log"
+	"flag"
 	"net/http"
 	"os"
 	"os/signal"
@@ -10,14 +10,21 @@ import (
 
 	"github.com/Ubivius/microservice-dispatcher/pkg/handlers"
 	"github.com/gorilla/mux"
+	logf "sigs.k8s.io/controller-runtime/pkg/log"
+	"sigs.k8s.io/controller-runtime/pkg/log/zap"
 )
 
+var log = logf.Log.WithName("dispatcher-main")
+
 func main() {
-	// Logger
-	logger := log.New(os.Stdout, "Dispatcher", log.LstdFlags)
+	// Starting k8s logger
+	opts := zap.Options{}
+	opts.BindFlags(flag.CommandLine)
+	newLogger := zap.New(zap.UseFlagOptions(&opts), zap.WriteTo(os.Stdout))
+	logf.SetLogger(newLogger.WithName("log"))
 
 	// Creating handlers
-	gameHandler := handlers.NewGameHandler(logger)
+	gameHandler := handlers.NewGameHandler()
 
 	// Mux route handling with gorilla/mux
 	router := mux.NewRouter()
@@ -36,11 +43,10 @@ func main() {
 	}
 
 	go func() {
-		logger.Println("Starting server on port ", server.Addr)
+		log.Info("Starting server", "port", server.Addr)
 		err := server.ListenAndServe()
 		if err != nil {
-			logger.Println("Error starting server : ", err)
-			logger.Fatal(err)
+			log.Error(err, "Server error")
 		}
 	}()
 
@@ -49,7 +55,7 @@ func main() {
 	signal.Notify(signalChannel, os.Interrupt)
 	receivedSignal := <-signalChannel
 
-	logger.Println("Received terminate, beginning graceful shutdown", receivedSignal)
+	log.Info("Received terminate, beginning graceful shutdown", "received_signal", receivedSignal.String())
 
 	// Server shutdown
 	timeoutContext, cancel := context.WithTimeout(context.Background(), 30*time.Second)
