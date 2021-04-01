@@ -32,8 +32,8 @@ func TestValidationMiddlewareWithValidBody(t *testing.T) {
 	// Server http on our router
 	router.ServeHTTP(response, request)
 
-	if response.Code != http.StatusNoContent {
-		t.Errorf("Expected status code %d, but got %d", http.StatusNoContent, response.Code)
+	if response.Code != http.StatusOK {
+		t.Errorf("Expected status code %d, but got %d", http.StatusOK, response.Code)
 	}
 }
 
