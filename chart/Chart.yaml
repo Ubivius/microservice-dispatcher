@@ -1,0 +1,13 @@
+apiVersion: v2
+name: microservice-dispatcher
+type: application
+version: 0.0.0
+appVersion: 0.0.0
+description: "microservice-dispatcher: Template for microservices."
+icon: https://avatars.githubusercontent.com/u/64909001
+sources:
+  - https://github.com/Ubivius/microservice-dispatcher
+maintainers:
+  - name: Ubivius
+    email: ubivius@gmail.com
+engine: gotpl
