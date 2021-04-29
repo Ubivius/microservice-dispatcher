@@ -1,4 +1,4 @@
-# microservice-dispatcher
+# Microservice-Dispatcher
 The dispatcher is used for starting game servers in the kubernetes cluster.
 
 When players are logged into their account in the game client they send a request to the disatcher.
