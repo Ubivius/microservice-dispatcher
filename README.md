@@ -13,15 +13,15 @@ Once the game server is up and running the dispatcher returns the information fo
 `POST` `/player` A game client calls this endpoint when the connected player wants to connect to join a game. </br>
 ```json
 {
-    "id"    "string, required",
-    "ip"    "string, required",
+    "id":    "string, required",
+    "ip":    "string, required",
 }
 ```
 Returns
 ```json
 {
-    "server_ip" "string",
-    "tcp_port" "int",
-    "udp_port" "int",
+    "server_ip": "string",
+    "tcp_port": "int",
+    "udp_port": "int",
 }
 ```
