@@ -3,6 +3,7 @@ module github.com/Ubivius/microservice-dispatcher
 go 1.15
 
 require (
+	agones.dev/agones v1.17.0 // indirect
 	github.com/go-playground/universal-translator v0.17.0 // indirect
 	github.com/go-playground/validator v9.31.0+incompatible
 	github.com/gogo/protobuf v1.3.2 // indirect
