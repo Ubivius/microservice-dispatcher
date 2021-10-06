@@ -53,7 +53,7 @@ func CreateGameserver() {
 	}
 	newGS, err := agonesClient.AgonesV1().GameServers("default").Create(context.TODO(), gs, metav1.CreateOptions{})
 	if err != nil {
-		panic(err)
+		log.Error(err, "Error creating game server")
 	}
 
 	fmt.Printf("New game servers' name is: %s", newGS.ObjectMeta.Name)
