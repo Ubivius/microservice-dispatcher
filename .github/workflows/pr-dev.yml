@@ -4,6 +4,11 @@ on:
   pull_request:
     branches: [ dev ]
 
+env:
+  BUILD_TYPE: test
+  DOCKERHUB_USER: ${{ secrets.DOCKERHUB_USERNAME }}
+  DOCKERHUB_PWD: ${{ secrets.DOCKERHUB_PWD }}
+
 jobs:
   build-and-test:
     runs-on: ubuntu-latest
@@ -41,7 +46,7 @@ jobs:
             ./.github/tools_install.sh
             IN=$(echo ${GITHUB_REPOSITORY})
             NAME=${IN#"Ubivius/"}
-            VERSION=$(yq e '.version' ./chart/Chart.yaml)
+            VERSION=$(yq e '.version' ./chart/Chart.yaml)-rc
             echo "::set-output name=REPO_NAME::$(echo $NAME)"
             echo "::set-output name=BRANCH::$(echo $GITHUB_REF)"
             echo "::set-output name=REPO_VERSION::$(echo $VERSION)"
