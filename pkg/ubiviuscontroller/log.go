@@ -1,4 +1,4 @@
-package controller
+package ubiviuscontroller
 
 import (
 	baselog "github.com/Ubivius/microservice-dispatcher/pkg/log"

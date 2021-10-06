@@ -1,4 +1,4 @@
-package controller
+package ubiviuscontroller
 
 import (
 	"context"
@@ -12,10 +12,11 @@ import (
 	"k8s.io/client-go/rest"
 )
 
-func CreateGameserver() {
+func CreateGameserver() error {
 	config, err := rest.InClusterConfig()
 	if err != nil {
 		log.Error(err, "Could not create in cluster config")
+		return err
 	}
 
 	// Access to standard Kubernetes resources through the Kubernetes Clientset
@@ -24,6 +25,7 @@ func CreateGameserver() {
 	_, err = kubernetes.NewForConfig(config)
 	if err != nil {
 		log.Error(err, "Could not create the kubernetes clientset")
+		return err
 	}
 
 	// Access to the Agones resources through the Agones Clientset
@@ -31,6 +33,7 @@ func CreateGameserver() {
 	agonesClient, err := versioned.NewForConfig(config)
 	if err != nil {
 		log.Error(err, "Could not create the agones api clientset")
+		return err
 	}
 
 	// Create a GameServer
@@ -54,7 +57,9 @@ func CreateGameserver() {
 	newGS, err := agonesClient.AgonesV1().GameServers("default").Create(context.TODO(), gs, metav1.CreateOptions{})
 	if err != nil {
 		log.Error(err, "Error creating game server")
+		return err
 	}
 
 	fmt.Printf("New game servers' name is: %s", newGS.ObjectMeta.Name)
+	return nil
 }
