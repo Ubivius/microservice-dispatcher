@@ -34,6 +34,10 @@ func main() {
 	postRouter.HandleFunc("/player", gameHandler.NewPlayer)
 	postRouter.Use(gameHandler.MiddlewarePlayerValidation)
 
+	// Get router
+	getRouter := router.Methods(http.MethodGet).Subrouter()
+	getRouter.HandleFunc("/game", gameHandler.CallController)
+
 	// Server setup
 	server := &http.Server{
 		Addr:        ":9090",

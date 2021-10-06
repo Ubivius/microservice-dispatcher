@@ -1,6 +1,6 @@
 module github.com/Ubivius/microservice-dispatcher
 
-go 1.15
+go 1.16
 
 require (
 	agones.dev/agones v1.17.0
