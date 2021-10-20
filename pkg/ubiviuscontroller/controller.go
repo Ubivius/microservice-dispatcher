@@ -34,7 +34,7 @@ func GetGameserverIP() (string, error) {
 		return "", err
 	}
 
-	gameServer, err := agonesClient.AgonesV1().GameServers("default").Get(context.TODO(), "simple-game-server", metav1.GetOptions{})
+	gameServer, err := agonesClient.AgonesV1().GameServers("default").Get(context.TODO(), "simple-game-server-s8p8q-hdv6g", metav1.GetOptions{})
 	if err != nil {
 		log.Error(err, "Error getting game server")
 		return "", err
