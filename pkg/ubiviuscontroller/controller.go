@@ -4,19 +4,17 @@ import (
 	"context"
 	"fmt"
 
-	agonesv1 "agones.dev/agones/pkg/apis/agones/v1"
 	"agones.dev/agones/pkg/client/clientset/versioned"
-	corev1 "k8s.io/api/core/v1"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/client-go/kubernetes"
 	"k8s.io/client-go/rest"
 )
 
-func CreateGameserver() error {
+func GetGameserverIP() (string, error) {
 	config, err := rest.InClusterConfig()
 	if err != nil {
 		log.Error(err, "Could not create in cluster config")
-		return err
+		return "", err
 	}
 
 	// Access to standard Kubernetes resources through the Kubernetes Clientset
@@ -25,7 +23,7 @@ func CreateGameserver() error {
 	_, err = kubernetes.NewForConfig(config)
 	if err != nil {
 		log.Error(err, "Could not create the kubernetes clientset")
-		return err
+		return "", err
 	}
 
 	// Access to the Agones resources through the Agones Clientset
@@ -33,33 +31,17 @@ func CreateGameserver() error {
 	agonesClient, err := versioned.NewForConfig(config)
 	if err != nil {
 		log.Error(err, "Could not create the agones api clientset")
-		return err
+		return "", err
 	}
 
-	// Create a GameServer
-	gs := &agonesv1.GameServer{ObjectMeta: metav1.ObjectMeta{GenerateName: "simple-game-server", Namespace: "default"},
-		Spec: agonesv1.GameServerSpec{
-			Container: "simple-game-server",
-			Ports: []agonesv1.GameServerPort{{
-				ContainerPort: 7654,
-				HostPort:      7654,
-				Name:          "gameport",
-				PortPolicy:    agonesv1.Static,
-				Protocol:      corev1.ProtocolUDP,
-			}},
-			Template: corev1.PodTemplateSpec{
-				Spec: corev1.PodSpec{
-					Containers: []corev1.Container{{Name: "simple-game-server", Image: "gcr.io/agones-images/simple-game-server:0.3"}},
-				},
-			},
-		},
-	}
-	newGS, err := agonesClient.AgonesV1().GameServers("default").Create(context.TODO(), gs, metav1.CreateOptions{})
+	gameServer, err := agonesClient.AgonesV1().GameServers("default").Get(context.TODO(), "simple-game-server", metav1.GetOptions{})
 	if err != nil {
-		log.Error(err, "Error creating game server")
-		return err
+		log.Error(err, "Error getting game server")
+		return "", err
 	}
 
-	fmt.Printf("New game servers' name is: %s", newGS.ObjectMeta.Name)
-	return nil
+	gameServerIP := &gameServer.Status.Address
+	fmt.Printf("Game server name is: %s", gameServer.ObjectMeta.Name)
+	fmt.Printf("Game server ip address is: %s", *gameServerIP)
+	return *gameServerIP, nil
 }
