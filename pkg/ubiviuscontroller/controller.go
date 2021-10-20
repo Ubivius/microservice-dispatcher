@@ -2,7 +2,6 @@ package ubiviuscontroller
 
 import (
 	"context"
-	"fmt"
 
 	"agones.dev/agones/pkg/client/clientset/versioned"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
@@ -41,7 +40,7 @@ func GetGameserverIP() (string, error) {
 	}
 
 	gameServerIP := &gameServer.Status.Address
-	fmt.Printf("Game server name is: %s", gameServer.ObjectMeta.Name)
-	fmt.Printf("Game server ip address is: %s", *gameServerIP)
+	log.Info("Game server name is: %s", gameServer.ObjectMeta.Name)
+	log.Info("Game server ip address is: %s", *gameServerIP)
 	return *gameServerIP, nil
 }
