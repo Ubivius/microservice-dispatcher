@@ -9,7 +9,7 @@ import (
 	"k8s.io/client-go/rest"
 )
 
-func GetGameserverIP() (string, error) {
+func GetGameserverIP(id string) (string, error) {
 	config, err := rest.InClusterConfig()
 	if err != nil {
 		log.Error(err, "Could not create in cluster config")
@@ -33,7 +33,7 @@ func GetGameserverIP() (string, error) {
 		return "", err
 	}
 
-	gameServer, err := agonesClient.AgonesV1().GameServers("default").Get(context.TODO(), "simple-game-server-s8p8q-g547q", metav1.GetOptions{})
+	gameServer, err := agonesClient.AgonesV1().GameServers("default").Get(context.TODO(), "simple-game-server-"+id, metav1.GetOptions{})
 	if err != nil {
 		log.Error(err, "Error getting game server")
 		return "", err

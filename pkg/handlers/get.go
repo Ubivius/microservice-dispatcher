@@ -6,11 +6,14 @@ import (
 
 	"github.com/Ubivius/microservice-dispatcher/pkg/data"
 	"github.com/Ubivius/microservice-dispatcher/pkg/ubiviuscontroller"
+	"github.com/gorilla/mux"
 )
 
 func (gameHandler *GameHandler) CallController(responseWriter http.ResponseWriter, request *http.Request) {
 	log.Info("Calling k8s controller")
-	gameServerIP, err := ubiviuscontroller.GetGameserverIP()
+	vars := mux.Vars(request)
+	id := vars["id"]
+	gameServerIP, err := ubiviuscontroller.GetGameserverIP(id)
 	if err != nil {
 		log.Error(err, "Error while calling controller")
 	}

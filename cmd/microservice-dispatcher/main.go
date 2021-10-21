@@ -36,7 +36,7 @@ func main() {
 
 	// Get router
 	getRouter := router.Methods(http.MethodGet).Subrouter()
-	getRouter.HandleFunc("/game", gameHandler.CallController)
+	getRouter.HandleFunc("/getIP/{id:[0-9a-z-]+}", gameHandler.CallController)
 
 	// Server setup
 	server := &http.Server{
