@@ -65,6 +65,8 @@ func GetReadyGameserver() (v1.GameServer, error) {
 
 	for _, gameServer := range gameServerList.Items {
 		if gameServer.Status.State == "Ready" {
+
+			log.Info("Game server name is: %s", gameServer.ObjectMeta.Name)
 			return gameServer, nil
 		}
 	}
