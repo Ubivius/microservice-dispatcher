@@ -2,7 +2,7 @@ replicaCount: 1
 
 image:
   repository: ubiviushub/microservice-dispatcher
-  tag: 0.0.0
+  tag: 0.0.0-rc
   pullPolicy: Always
 
 imagePullSecrets: []
@@ -65,7 +65,7 @@ ingress:
     # kubernetes.io/ingress.class: nginx
     # kubernetes.io/tls-acme: "true"
   hosts:
-    - host: disptach.player.dev.ubivius.tk
+    - host: dispatch.player.dev.ubivius.tk
       paths:
         - path: /
   tls: []
