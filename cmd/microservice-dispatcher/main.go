@@ -39,6 +39,11 @@ func main() {
 	getRouter.HandleFunc("/getIP/{id:[0-9a-z-]+}", gameHandler.CallGetGameserverIP)
 	getRouter.HandleFunc("/getGameServer", gameHandler.CallGetReadyGameserver)
 
+	//Health Check
+	//Health Check
+	getRouter.HandleFunc("/health/live", gameHandler.LivenessCheck)
+	getRouter.HandleFunc("/health/ready", gameHandler.ReadinessCheck)
+
 	// Server setup
 	server := &http.Server{
 		Addr:        ":9090",
