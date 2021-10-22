@@ -16,7 +16,7 @@ func (gameHandler *GameHandler) CallGetGameserverIP(responseWriter http.Response
 	gameServerIP, err := ubiviuscontroller.GetGameserverIP(id)
 	if err != nil {
 		log.Error(err, "Error while calling controller")
-		http.Error(responseWriter, "No ready game server found", http.StatusTeapot)
+		http.Error(responseWriter, "No ready game server found", http.StatusInternalServerError)
 	}
 
 	gameServer := data.GameServer{ID: id, ServerIP: gameServerIP, TCPPort: 9151, UDPPort: 9150}
@@ -33,6 +33,7 @@ func (gameHandler *GameHandler) CallGetReadyGameserver(responseWriter http.Respo
 	gameServer, err := ubiviuscontroller.GetReadyGameserver()
 	if err != nil {
 		log.Error(err, "Error while calling controller")
+		http.Error(responseWriter, err.Error(), http.StatusTeapot)
 	}
 	id := gameServer.Name[len(gameServer.Name)-11:] //only get the game id
 	gameServerInfo := data.GameServer{ID: id, ServerIP: gameServer.Status.Address, TCPPort: 9151, UDPPort: 9150}
