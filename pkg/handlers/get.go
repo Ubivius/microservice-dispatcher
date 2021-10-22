@@ -35,7 +35,12 @@ func (gameHandler *GameHandler) CallGetReadyGameserver(responseWriter http.Respo
 		log.Error(err, "Error while calling controller")
 		http.Error(responseWriter, err.Error(), http.StatusTeapot)
 	}
-	id := gameServer.Name[len(gameServer.Name)-11:] //only get the game id
+
+	id := ""
+	if len(gameServer.Name) != 0 {
+		id = gameServer.Name[len(gameServer.Name)-11:] //only get the game id
+	}
+
 	gameServerInfo := data.GameServer{ID: id, ServerIP: gameServer.Status.Address, TCPPort: 9151, UDPPort: 9150}
 	err = json.NewEncoder(responseWriter).Encode(gameServerInfo)
 	if err != nil {
