@@ -36,8 +36,8 @@ func main() {
 
 	// Get router
 	getRouter := router.Methods(http.MethodGet).Subrouter()
-	getRouter.HandleFunc("/getIP/{id:[0-9a-z-]+}", gameHandler.CallGetGameserverIP)
-	getRouter.HandleFunc("/getGameServer", gameHandler.CallGetReadyGameserver)
+	getRouter.HandleFunc("/IP/{id:[0-9a-z-]+}", gameHandler.CallGetGameserverIP)
+	getRouter.HandleFunc("/GameServer", gameHandler.CallGetReadyGameserver)
 
 	//Health Check
 	//Health Check
