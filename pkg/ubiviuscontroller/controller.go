@@ -63,6 +63,10 @@ func GetReadyGameserver() (v1.GameServer, error) {
 		return v1.GameServer{}, err
 	}
 
+	if len(gameServerList.Items) == 0 {
+		return v1.GameServer{}, errors.New("Game server list is empty")
+	}
+
 	for _, gameServer := range gameServerList.Items {
 		if gameServer.Status.State == "Ready" {
 
