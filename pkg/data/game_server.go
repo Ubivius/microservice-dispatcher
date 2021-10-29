@@ -10,5 +10,5 @@ type GameServer struct {
 
 // This function currently returns the values that we need for local testing with the current version of the client-server setup
 func NewGameServer() *GameServer {
-	return &GameServer{ID: "abcde-fghij", ServerIP: "192.168.0.141", TCPPort: 9051, UDPPort: 9050}
+	return &GameServer{TCPPort: 9051, UDPPort: 9050}
 }
