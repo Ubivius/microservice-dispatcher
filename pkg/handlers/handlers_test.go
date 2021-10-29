@@ -30,7 +30,7 @@ func TestNewPlayer(t *testing.T) {
 	if response.Code != http.StatusOK {
 		t.Errorf("Expected status code %d, but got %d", http.StatusAccepted, response.Code)
 	}
-	if !strings.Contains(response.Body.String(), "\"server_id\":\"\",\"\":\"192.168.0.141\",\"tcp_port\":9051,\"udp_port\":9050") {
+	if !strings.Contains(response.Body.String(), "\"server_id\":\"\",\"server_ip\":\"\",\"tcp_port\":9051,\"udp_port\":9050") {
 		t.Errorf("Expected correct response body but got %s", response.Body.String())
 	}
 }
