@@ -11,6 +11,5 @@ func (gameHandler *GameHandler) LivenessCheck(responseWriter http.ResponseWriter
 
 //ReadinessCheck verifies that the application is ready to accept requests
 func (gameHandler *GameHandler) ReadinessCheck(responseWriter http.ResponseWriter, request *http.Request) {
-
 	responseWriter.WriteHeader(http.StatusOK)
 }

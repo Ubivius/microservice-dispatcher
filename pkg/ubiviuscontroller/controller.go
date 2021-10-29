@@ -39,7 +39,6 @@ func getAgonesConfig() (*versioned.Clientset, error) {
 }
 
 func GetGameserverIP(id string) (string, error) {
-
 	agonesClient, _ := getAgonesConfig()
 
 	gameServer, err := agonesClient.AgonesV1().GameServers("default").Get(context.TODO(), "ubivius-game-"+id, metav1.GetOptions{})

@@ -40,7 +40,6 @@ func main() {
 	getRouter.HandleFunc("/GameServer", gameHandler.CallGetReadyGameserver)
 
 	//Health Check
-	//Health Check
 	getRouter.HandleFunc("/health/live", gameHandler.LivenessCheck)
 	getRouter.HandleFunc("/health/ready", gameHandler.ReadinessCheck)
 
