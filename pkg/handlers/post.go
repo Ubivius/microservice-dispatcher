@@ -5,10 +5,13 @@ import (
 	"net/http"
 
 	"github.com/Ubivius/microservice-dispatcher/pkg/data"
+	"go.opentelemetry.io/otel"
 )
 
 // NewPlayer creates a new player from the received JSON
 func (gameHandler *GameHandler) NewPlayer(responseWriter http.ResponseWriter, request *http.Request) {
+	_, span := otel.Tracer("dispatcher").Start(request.Context(), "newPlayer")
+	defer span.End()
 	log.Info("POST request for new game")
 	player := request.Context().Value(KeyPlayer{}).(*data.Player)
 

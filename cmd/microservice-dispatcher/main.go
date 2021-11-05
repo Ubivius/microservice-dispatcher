@@ -9,9 +9,9 @@ import (
 	"time"
 
 	"github.com/Ubivius/microservice-dispatcher/pkg/handlers"
+	"github.com/Ubivius/microservice-dispatcher/pkg/router"
 	"github.com/Ubivius/pkg-telemetry/metrics"
 	"github.com/Ubivius/pkg-telemetry/tracing"
-	"github.com/gorilla/mux"
 	logf "sigs.k8s.io/controller-runtime/pkg/log"
 	"sigs.k8s.io/controller-runtime/pkg/log/zap"
 )
@@ -34,22 +34,7 @@ func main() {
 	// Creating handlers
 	gameHandler := handlers.NewGameHandler()
 
-	// Mux route handling with gorilla/mux
-	router := mux.NewRouter()
-
-	// Post router
-	postRouter := router.Methods(http.MethodPost).Subrouter()
-	postRouter.HandleFunc("/player", gameHandler.NewPlayer)
-	postRouter.Use(gameHandler.MiddlewarePlayerValidation)
-
-	// Get router
-	getRouter := router.Methods(http.MethodGet).Subrouter()
-	getRouter.HandleFunc("/IP/{id:[0-9a-z-]+}", gameHandler.CallGetGameserverIP)
-	getRouter.HandleFunc("/GameServer", gameHandler.CallGetReadyGameserver)
-
-	//Health Check
-	getRouter.HandleFunc("/health/live", gameHandler.LivenessCheck)
-	getRouter.HandleFunc("/health/ready", gameHandler.ReadinessCheck)
+	router := router.New(gameHandler)
 
 	// Server setup
 	server := &http.Server{

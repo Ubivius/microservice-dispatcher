@@ -7,9 +7,12 @@ import (
 	"github.com/Ubivius/microservice-dispatcher/pkg/data"
 	"github.com/Ubivius/microservice-dispatcher/pkg/ubiviuscontroller"
 	"github.com/gorilla/mux"
+	"go.opentelemetry.io/otel"
 )
 
 func (gameHandler *GameHandler) CallGetGameserverIP(responseWriter http.ResponseWriter, request *http.Request) {
+	_, span := otel.Tracer("dispatcher").Start(request.Context(), "callGetGameserverIP")
+	defer span.End()
 	log.Info("Calling k8s controller")
 	vars := mux.Vars(request)
 	id := vars["id"]
@@ -28,6 +31,8 @@ func (gameHandler *GameHandler) CallGetGameserverIP(responseWriter http.Response
 }
 
 func (gameHandler *GameHandler) CallGetReadyGameserver(responseWriter http.ResponseWriter, request *http.Request) {
+	_, span := otel.Tracer("dispatcher").Start(request.Context(), "callGetReadyGameserver")
+	defer span.End()
 	log.Info("Calling k8s controller")
 
 	gameServer, err := ubiviuscontroller.GetReadyGameserver()
