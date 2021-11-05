@@ -9,6 +9,8 @@ import (
 	"time"
 
 	"github.com/Ubivius/microservice-dispatcher/pkg/handlers"
+	"github.com/Ubivius/pkg-telemetry/metrics"
+	"github.com/Ubivius/pkg-telemetry/tracing"
 	"github.com/gorilla/mux"
 	logf "sigs.k8s.io/controller-runtime/pkg/log"
 	"sigs.k8s.io/controller-runtime/pkg/log/zap"
@@ -22,6 +24,12 @@ func main() {
 	opts.BindFlags(flag.CommandLine)
 	newLogger := zap.New(zap.UseFlagOptions(&opts), zap.WriteTo(os.Stdout))
 	logf.SetLogger(newLogger.WithName("log"))
+
+	// Starting tracer provider
+	tp := tracing.CreateTracerProvider("http://192.168.6.12:14268/api/traces", "microservice-dispatcher-traces")
+
+	// Starting metrics exporter
+	metrics.StartPrometheusExporterWithName("dispatcher")
 
 	// Creating handlers
 	gameHandler := handlers.NewGameHandler()
@@ -66,9 +74,17 @@ func main() {
 
 	log.Info("Received terminate, beginning graceful shutdown", "received_signal", receivedSignal.String())
 
-	// Server shutdown
-	timeoutContext, cancel := context.WithTimeout(context.Background(), 30*time.Second)
+	// Context cancelling
+	timeoutContext, cancel := context.WithTimeout(context.Background(), 5*time.Second)
 	defer cancel()
 
+	// Cleanly shutdown and flush telemetry on shutdown
+	defer func(ctx context.Context) {
+		if err := tp.Shutdown(ctx); err != nil {
+			log.Error(err, "Error shutting down tracer provider")
+		}
+	}(timeoutContext)
+
+	// Server shutdown
 	_ = server.Shutdown(timeoutContext)
 }
