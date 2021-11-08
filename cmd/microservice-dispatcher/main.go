@@ -9,7 +9,9 @@ import (
 	"time"
 
 	"github.com/Ubivius/microservice-dispatcher/pkg/handlers"
-	"github.com/gorilla/mux"
+	"github.com/Ubivius/microservice-dispatcher/pkg/router"
+	"github.com/Ubivius/pkg-telemetry/metrics"
+	"github.com/Ubivius/pkg-telemetry/tracing"
 	logf "sigs.k8s.io/controller-runtime/pkg/log"
 	"sigs.k8s.io/controller-runtime/pkg/log/zap"
 )
@@ -23,25 +25,16 @@ func main() {
 	newLogger := zap.New(zap.UseFlagOptions(&opts), zap.WriteTo(os.Stdout))
 	logf.SetLogger(newLogger.WithName("log"))
 
+	// Starting tracer provider
+	tp := tracing.CreateTracerProvider("http://192.168.6.12:14268/api/traces", "microservice-dispatcher-traces")
+
+	// Starting metrics exporter
+	metrics.StartPrometheusExporterWithName("dispatcher")
+
 	// Creating handlers
 	gameHandler := handlers.NewGameHandler()
 
-	// Mux route handling with gorilla/mux
-	router := mux.NewRouter()
-
-	// Post router
-	postRouter := router.Methods(http.MethodPost).Subrouter()
-	postRouter.HandleFunc("/player", gameHandler.NewPlayer)
-	postRouter.Use(gameHandler.MiddlewarePlayerValidation)
-
-	// Get router
-	getRouter := router.Methods(http.MethodGet).Subrouter()
-	getRouter.HandleFunc("/IP/{id:[0-9a-z-]+}", gameHandler.CallGetGameserverIP)
-	getRouter.HandleFunc("/GameServer", gameHandler.CallGetReadyGameserver)
-
-	//Health Check
-	getRouter.HandleFunc("/health/live", gameHandler.LivenessCheck)
-	getRouter.HandleFunc("/health/ready", gameHandler.ReadinessCheck)
+	router := router.New(gameHandler)
 
 	// Server setup
 	server := &http.Server{
@@ -66,9 +59,17 @@ func main() {
 
 	log.Info("Received terminate, beginning graceful shutdown", "received_signal", receivedSignal.String())
 
-	// Server shutdown
-	timeoutContext, cancel := context.WithTimeout(context.Background(), 30*time.Second)
+	// Context cancelling
+	timeoutContext, cancel := context.WithTimeout(context.Background(), 5*time.Second)
 	defer cancel()
 
+	// Cleanly shutdown and flush telemetry on shutdown
+	defer func(ctx context.Context) {
+		if err := tp.Shutdown(ctx); err != nil {
+			log.Error(err, "Error shutting down tracer provider")
+		}
+	}(timeoutContext)
+
+	// Server shutdown
 	_ = server.Shutdown(timeoutContext)
 }
