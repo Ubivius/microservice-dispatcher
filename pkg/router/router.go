@@ -26,7 +26,7 @@ func New(gameHandler *handlers.GameHandler) *mux.Router {
 	getRouter.HandleFunc("/IP/{id:[0-9a-z-]+}", gameHandler.CallGetGameserverIP)
 	getRouter.HandleFunc("/GameServer", gameHandler.CallGetReadyGameserver)
 
-	//Health Check
+	// Health Check
 	getRouter.HandleFunc("/health/live", gameHandler.LivenessCheck)
 	getRouter.HandleFunc("/health/ready", gameHandler.ReadinessCheck)
 	return router
