@@ -65,13 +65,19 @@ ingress:
     # kubernetes.io/ingress.class: nginx
     # kubernetes.io/tls-acme: "true"
   hosts:
-    - host: dispatch.player.dev.ubivius.tk
+    - host: dispatcher.player.dev.ubivius.tk
       paths:
         - path: /
   tls: []
   #  - secretName: chart-example-tls
   #    hosts:
   #      - chart-example.local
+
+ingressRoute:
+  enabled: true
+  match: Host(`dispatcher.player.dev.ubivius.tk`) && PathPrefix(`/`)
+  tls:
+    secretName: dispatcher.player.dev.ubivius.tk
 
 resources: {}
   # We usually recommend not to specify default resources and to leave this as a conscious
