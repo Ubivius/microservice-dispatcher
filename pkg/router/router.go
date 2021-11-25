@@ -30,7 +30,9 @@ func New(gameHandler *handlers.GameHandler) *mux.Router {
 	getRouter.HandleFunc("/GameServer", gameHandler.CallGetReadyGameserver)
 
 	//Health Check
-	getRouter.HandleFunc("/health/live", gameHandler.LivenessCheck)
-	getRouter.HandleFunc("/health/ready", gameHandler.ReadinessCheck)
+	healthRouter := router.Methods(http.MethodGet).Subrouter()
+	healthRouter.HandleFunc("/health/live", gameHandler.LivenessCheck)
+	healthRouter.HandleFunc("/health/ready", gameHandler.ReadinessCheck)
+
 	return router
 }
